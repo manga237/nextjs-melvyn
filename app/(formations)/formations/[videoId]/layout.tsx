@@ -8,7 +8,7 @@ export default async function Page({
   children,
   params,
 }: PropsWithChildren<{
-  params: { videoId: string };
+  params: Promise<{ videoId: string }>;
 }>) {
   const { videoId } = await params;
   const video = videos.find((n) => n.id == videoId);
