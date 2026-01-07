@@ -16,8 +16,6 @@ import { Banknote, X } from "lucide-react";
 import { getUSer } from "@/lib/auth-server";
 import { deleterev } from "./new";
 import { Input } from "@/components/ui/input";
-import { UserPlan } from "@prisma/client";
-import { off } from "process";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 
 // type prop = {
