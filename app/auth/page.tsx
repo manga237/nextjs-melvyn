@@ -18,7 +18,7 @@ export default async function AuthPage() {
   async function ve() {
     "use server";
     await authClient.sendVerificationEmail({
-      email: user!.email,
+      email: user.email!,
       callbackURL: "/auth",
     });
     redirect(`/auth/verify?email=${user!.email}`);

@@ -18,7 +18,9 @@ export default async function AuthPage() {
         <CardTitle>Edit Profile </CardTitle>
       </CardHeader>
       <CardContent>
-        <AccountForm defaultvalues={{ name: user.name, image: user.image }} />
+        <AccountForm
+          defaultvalues={{ name: user.name ?? "", image: user.image ?? "" }}
+        />
       </CardContent>
     </Card>
   );

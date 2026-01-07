@@ -32,15 +32,15 @@ export const safeaction = actionuser
   .inputSchema(formSchema)
   .action(async ({ parsedInput: input, ctx }) => {
     await new Promise((r) => setTimeout(r, 1000));
-    if (input.name == "mechant") {
-      throw new SafeError("Invalid name");
-    }
+    // if (!ctx) {
+    //   throw new SafeError("Invalid name");
+    // }
     const newrev = await prisma.review.create({
       data: {
         name: input.name,
         star: 5,
         review: input.review,
-        userId: ctx.user.id,
+        userId: ctx.user.id!,
       },
     });
 

@@ -37,7 +37,7 @@ export const GET = async (req: NextRequest) => {
 export const POST = async (request: NextRequest) => {
   console.log(request.nextUrl);
   const body = await request.json();
-  const input = schema.parse(body);
+  const input = schema.extend({ userid: z.string() }).parse(body);
 
   await new Promise((r) => setTimeout(r, 1000));
 
@@ -49,6 +49,7 @@ export const POST = async (request: NextRequest) => {
       name: input.name,
       star: 5,
       review: input.review,
+      userId: input.userid,
     },
   });
   return NextResponse.json({ review: newrev });

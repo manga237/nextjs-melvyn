@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { formul, safeaction, sharelink } from "./formul";
+import { safeaction, sharelink } from "./formul";
 import { ComponentProps, useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useAction } from "next-safe-action/hooks";

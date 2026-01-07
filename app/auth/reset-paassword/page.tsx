@@ -12,12 +12,13 @@ import { Label } from "@/components/ui/label";
 import { auth } from "@/lib/auth";
 import { authClient } from "@/lib/auth-client";
 import { unauthorized, useRouter, useSearchParams } from "next/navigation";
-import { ComponentProps } from "react";
+import { ComponentProps, Suspense } from "react";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 
 export default function Page() {
-  const token = useSearchParams().get("token");
+  const token1 = useSearchParams();
+  const token = token1.get("token");
   const r = useRouter();
 
   async function onSubmit(f: FormData) {
@@ -45,7 +46,6 @@ export default function Page() {
       <Card>
         <CardHeader>
           <CardTitle>Reinitialiser le mot de passe</CardTitle>
-          <CardDescription>{token} </CardDescription>
         </CardHeader>
         <CardContent>
           <form className="flex flex-col gap-3" action={onSubmit}>
