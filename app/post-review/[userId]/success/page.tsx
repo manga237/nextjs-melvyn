@@ -33,7 +33,7 @@ export default async function Page({ params }: prop) {
         </CardHeader>
         <CardContent>
           <Input
-            value={`http://localhost:3000/post-review/${user?.id}`}
+            value={`https://mehb.vercel.app/post-review/${user?.id}`}
             readOnly
           />
         </CardContent>
