@@ -57,7 +57,7 @@ export default async function Page() {
               </Alert>
             ) : (
               <Input
-                value={`https://mehb.vercel.app/post-review/${user?.id}`}
+                value={`https://nextjs-manga.vercel.app/post-review/${user?.id}`}
                 readOnly
               />
             )}

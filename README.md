@@ -14,7 +14,7 @@ pnpm dev
 bun dev
 ```
 
-Open [https://mehb.vercel.app](https://mehb.vercel.app) with your browser to see the result.
+Open [https://nextjs-manga.vercel.app](https://nextjs-manga.vercel.app) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

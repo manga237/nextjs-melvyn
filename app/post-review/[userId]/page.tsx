@@ -33,7 +33,7 @@ export default async function Page({ params }: prop) {
         </CardHeader>
         <CardContent>
           <Input
-            value={`https://mehb.vercel.app/post-review/${user?.id}`}
+            value={`https://nextjs-manga.vercel.app/post-review/${user?.id}`}
             readOnly
           />
         </CardContent>
