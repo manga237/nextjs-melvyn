@@ -29,12 +29,13 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const user = await getUSer();
-  let r;
+  let r, r1;
   let offi;
   if (user && user.lim) {
     r = await prisma.review.findMany();
+    r1 = await prisma.review.findMany({ where: { userId: user.id } });
     //const revies = await prisma.review.findMany();
-    offi = r.length >= user.lim.limit;
+    offi = r1.length >= user.lim.limit;
     console.log({ user, r });
     console.log();
   } else {
