@@ -32,7 +32,7 @@ export const Header = () => {
 export const AuthButton = async () => {
   const user = await getUSer();
 
-  if (!user) {
+  if (!user || !user.name) {
     return (
       <Button variant={"outline"} className="">
         <Link href={"/auth/signin"}>Sign In</Link>
@@ -46,7 +46,7 @@ export const AuthButton = async () => {
           <Avatar className="size-8 ">
             {user.image ? <AvatarImage src={user.image} /> : null}
 
-            <AvatarFallback>{user.name![0].toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{user.name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
           <p>{user.name!.toUpperCase()}</p>
         </Button>

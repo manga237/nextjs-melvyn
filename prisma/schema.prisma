@@ -1,60 +1,45 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  
 }
 
 model Review {
-  id     String @id @default(cuid())
-  name   String
-  review String
-  star   Int
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  id       String   @id @default(cuid())
+  name     String
+  review   String
+  star     Int
   createAt DateTime @default(now())
   updateAt DateTime @default(now()) @updatedAt
- 
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
 }
 
-//sauvegarde les donnees lies a l'utilisateur actuel
 model User {
   id               String    @id
   name             String
-  email            String
+  email            String    @unique
   emailVerified    Boolean   @default(false)
   image            String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
-  sessions         Session[]
-  accounts         Account[]
-  reviews          Review[]
-  plan             UserPlan  @default(FREE)
   StripeCustomerId String?
-  
-  @@unique([email])
+  plan             UserPlan  @default(FREE)
+  reviews          Review[]
+  accounts         Account[]
+  sessions         Session[]
+
   @@map("user")
 }
 
-enum UserPlan {
-  FREE
-  PRO
-}
-//retrouver l'utilisateur quand il refresh
 model Session {
   id        String   @id
   expiresAt DateTime
-  token     String
+  token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ipAddress String?
@@ -62,18 +47,15 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@index([userId])
   @@map("session")
 }
 
-// moyen d'authentification
 model Account {
   id                    String    @id
   accountId             String
   providerId            String
   userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -83,11 +65,11 @@ model Account {
   password              String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("account")
 }
-
 
 model Verification {
   id         String   @id
@@ -99,4 +81,9 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+enum UserPlan {
+  FREE
+  PRO
 }

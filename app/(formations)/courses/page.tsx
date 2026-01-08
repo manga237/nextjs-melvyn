@@ -31,8 +31,8 @@ export default async function Page() {
   const user = await getUSer();
   let r;
   let offi;
-  if (user) {
-    r = await prisma.review.findMany({ where: { userId: user.id } });
+  if (user && user.lim) {
+    r = await prisma.review.findMany();
     //const revies = await prisma.review.findMany();
     offi = r.length >= user.lim.limit;
     console.log({ user, r });
@@ -40,27 +40,30 @@ export default async function Page() {
   } else {
     r = await prisma.review.findMany();
   }
+  console.log({ user });
 
   return (
     <>
-      <Card>
-        <CardHeader>
-          <CardTitle>Share Review Link</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {offi ? (
-            <Alert>
-              <Banknote />
-              <AlertTitle>vous avez atteint la limite </AlertTitle>
-            </Alert>
-          ) : (
-            <Input
-              value={`http://localhost:3000/post-review/${user?.id}`}
-              readOnly
-            />
-          )}
-        </CardContent>
-      </Card>
+      {user.lim ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Share Review Link</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {offi ? (
+              <Alert>
+                <Banknote />
+                <AlertTitle>vous avez atteint la limite </AlertTitle>
+              </Alert>
+            ) : (
+              <Input
+                value={`http://localhost:3000/post-review/${user?.id}`}
+                readOnly
+              />
+            )}
+          </CardContent>
+        </Card>
+      ) : null}
       <div className="flex flex-col gap-4">
         {r.map((n) => (
           <Card key={n.id} className="relative">

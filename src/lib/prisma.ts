@@ -1,19 +1,8 @@
-// lib/prisma.ts
-import { PrismaClient } from "@prisma/client/edge";
-import { withAccelerate } from "@prisma/extension-accelerate";
+import "dotenv/config";
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const connectionString = process.env.DATABASE_URL;
 
-const getPrisma = () => {
-  const client = new PrismaClient({ accelerateUrl: process.env.DATABASE_URL });
-
-  if (process.env.NODE_ENV === "development") {
-    return client;
-  }
-
-  return client.$extends(withAccelerate());
-};
-
-export const prisma = globalForPrisma.prisma || getPrisma();
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+const adapter = new PrismaPg({ connectionString });
+export const prisma = new PrismaClient({ adapter });
