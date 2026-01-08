@@ -33,7 +33,9 @@ type state = { message?: string; error?: string };
 export const safeaction = actionuser
   .inputSchema(formSchema)
   .action(async ({ parsedInput: input, ctx }) => {
-    if (ctx.user.id && ctx.user.lim.limit < 5) {
+    if (ctx.user) {
+      console.log(ctx.user.lim.limit);
+
       //      await new Promise((r) => setTimeout(r, 1000));
       // if (!ctx) {
       //   throw new SafeError("Invalid name");
@@ -50,7 +52,6 @@ export const safeaction = actionuser
       revalidatePath("/courses");
       return newrev;
     }
-    throw new Error("Impossible");
   });
 
 export const sharelink = actionClient
