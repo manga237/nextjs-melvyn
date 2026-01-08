@@ -34,7 +34,7 @@ export const auth = betterAuth({
         .setFrom(sentFrom)
         .setTo(recipients)
         .setText(`Click the link to verify your email: ${url}`)
-        .setSubject("E-MAIL de Verification");
+        .setSubject("Reset your password");
       await mailerSend.email.send(emailParams);
       console.log({ user, url });
     },
@@ -42,12 +42,18 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }, request) => {
-      void resend.emails.send({
-        from: "Melvyn App <onboarding@resend.dev>",
-        to: user.email,
-        subject: "Reset your password",
-        text: `Click the link to reset your password: ${url}`,
-      });
+      const sentFrom = new Sender(
+        "sandbox@test-q3enl6kyrmr42vwr.mlsender.net",
+        "NextJS-MANGA"
+      );
+      const recipients = [new Recipient(user.email, `${user.name}`)];
+      const emailParams = new EmailParams()
+        .setFrom(sentFrom)
+        .setTo(recipients)
+        .setText(`Click the link to reset your password: ${url}`)
+        .setSubject("E-MAIL de Verification");
+      await mailerSend.email.send(emailParams);
+
       console.log({ user, url });
     },
   },
