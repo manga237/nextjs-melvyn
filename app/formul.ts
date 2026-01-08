@@ -7,7 +7,7 @@ import z from "zod";
 import { formSchema } from "./review-schema";
 import { getUSer } from "@/lib/auth-server";
 
-const user = await getUSer();
+//const user = await getUSer();
 type state = { message?: string; error?: string };
 // export const formul = async (mes: state, formData: FormData) => {
 //   "use server";
@@ -33,7 +33,7 @@ type state = { message?: string; error?: string };
 export const safeaction = actionuser
   .inputSchema(formSchema)
   .action(async ({ parsedInput: input, ctx }) => {
-    if (user.id && user.lim.limit < 5) {
+    if (ctx.user.id && ctx.user.lim.limit < 5) {
       //      await new Promise((r) => setTimeout(r, 1000));
       // if (!ctx) {
       //   throw new SafeError("Invalid name");
