@@ -1,22 +1,10 @@
-import { betterAuth, string } from "better-auth";
+import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 // If your Prisma file is located elsewhere, you can change the path
 import { prisma } from "./prisma";
-import { resend } from "./resend";
-import { signIn } from "./auth-client";
-import { getSession } from "./auth-server";
 
-import nodemailer from "nodemailer";
 import { mailerSend } from "./mailersend";
 import { EmailParams, Recipient, Sender } from "mailersend";
-
-export const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_EMAIL!,
-    pass: process.env.GMAIL_APP_PASSWORD!,
-  },
-});
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -53,7 +41,6 @@ export const auth = betterAuth({
         .setText(`Click the link to reset your password: ${url}`)
         .setSubject("E-MAIL de Verification");
       await mailerSend.email.send(emailParams);
-
       console.log({ user, url });
     },
   },
